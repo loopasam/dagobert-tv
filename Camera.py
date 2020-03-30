@@ -30,11 +30,11 @@ class Camera:
         contours, hierarchy = cv2.findContours(dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
         # making rectangle around moving object
-        size_area = 0
+        movement_area = 0
         for contour in contours:
             (x, y, w, h) = cv2.boundingRect(contour)
-            size_area = cv2.contourArea(contour)
-            if size_area > 50:
+            movement_area = cv2.contourArea(contour)
+            if movement_area > 5:
                 # register the fact that a mvt has been spotted: either add to current recording or srat a new one:
                 cv2.rectangle(self.frame1, (x, y), (x + w, y + h), (0, 255, 255), 2)
 
@@ -50,10 +50,9 @@ class Camera:
         # Read new frame2
         ret, self.frame2 = self.cap.read()
 
-        # Press 'esc' for quit
         cv2.waitKey(40)
 
-        return self.frame2, size_area
+        return self.frame2, movement_area
 
     def release(self):
         self.cap.release()

@@ -1,4 +1,3 @@
-import cv2
 from Camera import Camera
 from Recorder import Recorder
 
@@ -10,9 +9,9 @@ def main():
 
     while camera.is_opened():
 
-        frame, size_area = camera.run()
+        frame, movement_area = camera.run()
 
-        recorder.record(frame, size_area)
+        recorder.record(frame, movement_area)
 
     # Release cap resource
     camera.release()
