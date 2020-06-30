@@ -19,6 +19,8 @@ class Camera:
         # Converting color image to gray_scale image
         gray = cv2.cvtColor(diff, cv2.COLOR_BGR2GRAY)
 
+        # cv2.imshow('gray', gray)
+
         # Converting gray scale image to GaussianBlur, so that change can be find easily
         blur = cv2.GaussianBlur(gray, (5, 5), 0)
 

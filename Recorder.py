@@ -9,13 +9,15 @@ class Recorder:
         self.is_recording = False
         self.timestamp = None
         self.prebuffer = []
+        self.prebuffer_size = 100
         self.movie_buffer = []
         self.minimum_movement_area = 200
 
     @staticmethod
     def get_new_movie(timestamp):
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        movie = cv2.VideoWriter(timestamp + '.mp4', fourcc, 20.0, (640, 480))
+        path = '/home/loopasam/Google Drive/ubuntu-bin/'
+        movie = cv2.VideoWriter(path + timestamp + '.mp4', fourcc, 20.0, (640, 480))
         return movie
 
     @staticmethod
@@ -27,7 +29,7 @@ class Recorder:
     def record(self, frame, movement_area):
 
         self.prebuffer.append(frame)
-        if len(self.prebuffer) > 100:
+        if len(self.prebuffer) > self.prebuffer_size:
             del self.prebuffer[0]
 
         if not self.is_recording and movement_area > self.minimum_movement_area:
@@ -54,5 +56,4 @@ class Recorder:
             if movement_area > self.minimum_movement_area:
                 self.frame_counter = 0
 
-            # TODO record eveything using a RAM buffer
             self.movie_buffer.append(frame)
