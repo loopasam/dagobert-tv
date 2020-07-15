@@ -9,9 +9,10 @@ class Recorder:
         self.is_recording = False
         self.timestamp = None
         self.prebuffer = []
-        self.prebuffer_size = 100
+        self.prebuffer_size = 20
         self.movie_buffer = []
-        self.minimum_movement_area = 200
+        self.minimum_start_movement_area = 700
+        self.minimum_keep_movement_area = 50
 
     @staticmethod
     def get_new_movie(timestamp):
@@ -32,11 +33,12 @@ class Recorder:
         if len(self.prebuffer) > self.prebuffer_size:
             del self.prebuffer[0]
 
-        if not self.is_recording and movement_area > self.minimum_movement_area:
+        if not self.is_recording and movement_area > self.minimum_start_movement_area:
             self.is_recording = True
-            print('starting recording...')
             self.timestamp = self.get_timestamp()
             self.movie_buffer = self.prebuffer[:]
+            print('starting recording...')
+            print(self.timestamp)
 
         if self.is_recording:
             if self.frame_counter > 100:
@@ -53,7 +55,7 @@ class Recorder:
                 self.frame_counter += 1
                 print(self.frame_counter)
 
-            if movement_area > self.minimum_movement_area:
+            if movement_area > self.minimum_keep_movement_area:
                 self.frame_counter = 0
 
             self.movie_buffer.append(frame)

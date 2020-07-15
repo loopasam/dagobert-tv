@@ -37,6 +37,7 @@ class Camera:
             (x, y, w, h) = cv2.boundingRect(contour)
             movement_area = cv2.contourArea(contour)
             if movement_area > 5:
+                pass
                 # register the fact that a mvt has been spotted: either add to current recording or srat a new one:
                 cv2.rectangle(self.frame1, (x, y), (x + w, y + h), (0, 255, 255), 2)
 
